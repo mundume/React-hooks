@@ -1,31 +1,30 @@
 import React from 'react'
-import { useReducer} from'react'
+import { useEffect, useState } from'react'
+import  axios from 'axios'
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'increment':
-      return {count: state.count + 1, showText: state.showText}
-   case "toggleShowText":
-     return {count: state.count, showText:!state.showText}
+const UuseEffect = () => {
+  const [data, setData] = useState('')
+  const [count , setCount] = useState(0)
 
-     default:
-      return state;
-  }
-}
+    useEffect(() => {
+      axios.get('https://jsonplaceholder.typicode.com/users').then((response)=>{
+       setData(response.data[0].email)
+       console.log('x')
 
-const Hooks = () => {
-    const [state, dispatch] = useReducer(reducer, {count: 0,showText:true})
+      });
+     } , [count])
+
+    
+
   return (
-    <div>
-      <h1>{state.count}</h1>
-        <button onClick={()=>{
-          dispatch({type: 'increment'})
-          dispatch ({type: 'toggleShowText'})
-        }}> click</button>
-
-        {state.showText&&<h1>Hello</h1>}
+    <div>jjj
+       <h1>{data}</h1>
+    <h2>{count}</h2>
+    <button onClick={()=>{
+      setCount(count + 1)
+    }}>count</button>
     </div>
   )
 }
 
-export default Hooks
+export default UuseEffect
